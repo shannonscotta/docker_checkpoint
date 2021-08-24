@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+
+  client:
+    build: client/
+    depends_on: 
+      - db
+    ports:
+      - 3000:3000
+    
+  api: 
+    build: api/
+    depends_on:
+      - db
+    ports:
+      - 8081:8081
+    command: sh -c "npx knex migrate:latest && npx knex seed:run && npm start"

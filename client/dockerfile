@@ -1,0 +1,17 @@
+#pull from base image
+FROM node:latest
+
+RUN mkdir -p /src/app
+#working direction
+WORKDIR /src/app
+
+COPY . /src/app
+
+RUN yarn install
+
+RUN yarn global add nodemon
+
+EXPOSE 3000
+
+#start app
+CMD [ "npm", "start"]
